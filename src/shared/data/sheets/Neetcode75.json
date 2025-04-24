@@ -1,0 +1,165 @@
+{
+    "id": "8e6c7f15-e20f-44de-9d41-926e92cdee12",
+    "name": "Neetcode 75",
+    "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime dolorum ipsa aperiam quidem. Recusandae id quasi officia sit voluptatum eius dignissimos non inventore, odit architecto.",
+    "isOngoing": true,
+    "problemsCount": 26,
+    "completionCount": 0,
+    "sheetColor": "green",
+    "problemsList": [
+        {
+            "topic": "Arrays",
+            "problemsCount": 3,
+            "completionCount": 0,
+            "problems": [
+                {
+                    "name": "Two Sum",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/two-sum/"
+                },
+                {
+                    "name": "Best Time to Buy and Sell Stock",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"
+                },
+                {
+                    "name": "Contains Duplicate",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/contains-duplicate/"
+                }
+            ]
+        },
+        {
+            "topic": "Binary",
+            "problemsCount": 5,
+            "completionCount": 0,
+            "problems": [
+                {
+                    "name": "Sum of Two Integers",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/sum-of-two-integers/"
+                },
+                {
+                    "name": "Number of 1 Bits",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/number-of-1-bits/"
+                },
+                {
+                    "name": "Counting Bits",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/counting-bits/"
+                },
+                {
+                    "name": "Missing Number",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/missing-number/"
+                },
+                {
+                    "name": "Reverse Bits",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/reverse-bits/"
+                }
+            ]
+        },
+        {
+            "topic": "Dynamic Programming",
+            "problemsCount": 11,
+            "completionCount": 0,
+            "problems": [
+                {
+                    "name": "Climbing Stairs",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/climbing-stairs/"
+                },
+                {
+                    "name": "Coin Change",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/coin-change/"
+                },
+                {
+                    "name": "Longest Increasing Subsequence",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/longest-increasing-subsequence/"
+                },
+                {
+                    "name": "Longest Common Subsequence",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/longest-common-subsequence/"
+                },
+                {
+                    "name": "Word Break",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/word-break/"
+                },
+                {
+                    "name": "Combination Sum IV",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/combination-sum-iv/"
+                },
+                {
+                    "name": "House Robber",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/house-robber/"
+                },
+                {
+                    "name": "House Robber II",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/house-robber-ii/"
+                },
+                {
+                    "name": "Decode Ways",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/decode-ways/"
+                },
+                {
+                    "name": "Unique Paths",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/unique-paths/"
+                },
+                {
+                    "name": "Jump Game",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/jump-game/"
+                }
+            ]
+        }
+    ]
+}

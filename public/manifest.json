@@ -1,0 +1,40 @@
+{
+    "manifest_version": 3,
+    "name": "Sheetcode Extension",
+    "version": "1.0",
+    "description": "A simple Chrome extension to keep track of all coding problems from different coding platforms.",
+    "action": {
+        "default_popup": "src/popup/index.html"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://leetcode.com/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "host_permissions": [
+        "https://leetcode.com/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "index.html",
+                "assets/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}
