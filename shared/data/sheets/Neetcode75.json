@@ -1,0 +1,184 @@
+{
+    "id": 1,
+    "name": "Neetcode 75",
+    "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime dolorum ipsa aperiam quidem. Recusandae id quasi officia sit voluptatum eius dignissimos non inventore, odit architecto.",
+    "isOngoing": true,
+    "problemsCount": 26,
+    "completionCount": 0,
+    "sheetColor": "green",
+    "problemsList": [
+        {
+            "topic": "Arrays",
+            "problemsCount": 3,
+            "completionCount": 0,
+            "problems": [
+                {
+                    "id": "two-sum",
+                    "name": "Two Sum",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/two-sum/"
+                },
+                {
+                    "id": "best-time-to-buy-and-sell-stock",
+                    "name": "Best Time to Buy and Sell Stock",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"
+                },
+                {
+                    "id": "contains-duplicate",
+                    "name": "Contains Duplicate",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/contains-duplicate/"
+                }
+            ]
+        },
+        {
+            "topic": "Binary",
+            "problemsCount": 5,
+            "completionCount": 0,
+            "problems": [
+                {
+                    "id": "sum-of-two-integers",
+                    "name": "Sum of Two Integers",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/sum-of-two-integers/"
+                },
+                {
+                    "id": "number-of-1-bits",
+                    "name": "Number of 1 Bits",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/number-of-1-bits/"
+                },
+                {
+                    "id":"counting-bits",
+                    "name": "Counting Bits",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/counting-bits/"
+                },
+                {
+                    "id": "missing-number",
+                    "name": "Missing Number",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/missing-number/"
+                },
+                {
+                    "id": "reverse-bits",
+                    "name": "Reverse Bits",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/reverse-bits/"
+                }
+            ]
+        },
+        {
+            "topic": "Dynamic Programming",
+            "problemsCount": 11,
+            "completionCount": 0,
+            "problems": [
+                {
+                    "id": "climbing-stairs",
+                    "name": "Climbing Stairs",
+                    "platform": "LeetCode",
+                    "difficulty": "Easy",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/climbing-stairs/"
+                },
+                {
+                    "id": "coin-change",
+                    "name": "Coin Change",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/coin-change/"
+                },
+                {
+                    "id": "longest-increasing-subsequence",
+                    "name": "Longest Increasing Subsequence",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/longest-increasing-subsequence/"
+                },
+                {
+                    "id": "longest-common-subsequence",
+                    "name": "Longest Common Subsequence",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/longest-common-subsequence/"
+                },
+                {
+                    "id": "word-break",
+                    "name": "Word Break",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/word-break/"
+                },
+                {
+                    "id": "combination-sum-iv",
+                    "name": "Combination Sum IV",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/combination-sum-iv/"
+                },
+                {
+                    "id": "house-robber",
+                    "name": "House Robber",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/house-robber/"
+                },
+                {
+                    "id": "house-robber-ii",
+                    "name": "House Robber II",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/house-robber-ii/"
+                },
+                {
+                    "id": "decode-ways",
+                    "name": "Decode Ways",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/decode-ways/"
+                },
+                {
+                    "id": "unique-paths",
+                    "name": "Unique Paths",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/unique-paths/"
+                },
+                {
+                    "id": "jump-game",
+                    "name": "Jump Game",
+                    "platform": "LeetCode",
+                    "difficulty": "Medium",
+                    "isSolved": false,
+                    "link": "https://leetcode.com/problems/jump-game/"
+                }
+            ]
+        }
+    ]
+}
