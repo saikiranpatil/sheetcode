@@ -17,7 +17,7 @@ export type ProblemsObj = {
 }
 
 export type Problem = {
-    id?: string;
+    id: string;
     name: string;
     platform: string;
     difficulty: string;
@@ -28,6 +28,6 @@ export type Problem = {
 export interface Submission {
     id?: number;
     problemId: string;
-    sheetId: string;
+    sheetId: number;
     submittedAt: number
 }

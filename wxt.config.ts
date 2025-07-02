@@ -6,7 +6,7 @@ import { defineConfig } from 'wxt';
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   manifest: {
-    permissions: ["activeTab", "tabs"],
+    permissions: ["activeTab", "tabs", "storage"],
     version: '0.0.0',
     name: 'Sheetcode Extension',
     description: 'A simple Chrome extension to keep track of all coding problems from different coding platforms.',

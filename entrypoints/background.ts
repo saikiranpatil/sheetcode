@@ -1,88 +1,64 @@
-// export default defineContentScript({
-//   matches: ['*://*.google.com/*'],
-//   main() {
-//     console.log('Hello content.');
-//   },
-// });
-
 import { db } from "@/lib/db/MyDB";
+import { chromeEvents } from "@/shared/constants";
+import { sheetIdParamsTitle } from "@/shared/constants/sheets";
+import { Submission } from "@/shared/types";
 
+export default defineBackground(() => {
+  chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+    if (message.type === chromeEvents.SAVE_SUBMISSION) {
+      handleSaveSubmission().then(sendResponse).catch(error => {
+        console.error("Error saving submission:", error);
+        sendResponse({ success: false, error: error.message });
+      });
+      return true;
+    }
+    return false;
+  });
 
-export default defineContentScript({
-  matches: ['*://*.leetcode.com/*'],
-  main() {
-    console.log('Hello content.');
+  async function handleSaveSubmission() {
+    const tab = await getCurrentActiveTab();
+    const tabUrl = tab?.url;
+    if (!tabUrl) throw new Error("Unable to retrieve current tab URL");
 
-    const buttons = Array.from(document.querySelectorAll("button"));
-    const submitButton = buttons.find(button => button.textContent?.toLocaleLowerCase().includes("submit"));
+    const url = new URL(tabUrl);
+    const sheetIdStr = url.searchParams.get(sheetIdParamsTitle);
+    const sheetId = Number(sheetIdStr);
 
-    submitButton?.addEventListener("click", () => {
-      console.log("Submit button clicked");
-      createSubmission();
-      // trackSubmissions();
-    })
-  },
-});
+    if (!sheetIdStr || isNaN(sheetId)) {
+      throw new Error("Invalid or missing Sheet ID in URL");
+    }
 
-const trackSubmissions = () => {
-  createMutation(document.body, 'span[data-e2e-locator="submission-result"]', () => {
-    createSubmission();
-  })
-}
+    const sheet = await db.sheetRepo.getById(sheetId);
+    if (!sheet) throw new Error("Sheet not found");
 
-const createMutation = (element: Element, targetSelector: string, callback?: () => void) => {
-  console.log("Mutation observer started for selector: ", targetSelector);
+    for (const problemList of sheet.problemsList) {
+      const problem = problemList.problems.find(p => url.href.startsWith(p.link));
+      if (problem) {
+        const submission: Submission = {
+          problemId: problem.id,
+          sheetId: sheet.id!,
+          submittedAt: Date.now(),
+        };
 
-  const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (mutation.type === 'childList') {
-        mutation.addedNodes.forEach(node => {
-          if (node.nodeType === 1) {
-            const targetElement: HTMLElement | null = (node as HTMLElement).querySelector(targetSelector);
-
-            if (targetElement) {
-              console.log("Mutation found at", node, " for ", targetSelector);
-
-              callback?.();
-              observer.disconnect();
-            }
-          }
-        });
+        const result = await db.submissionRepo.add(submission);
+        return { success: true, id: result };
       }
     }
-  })
 
-  observer.observe(element, { childList: true, subtree: true })
+    throw new Error("Problem not matched in the current sheet");
+  }
 
-  setTimeout(() => {
-    console.log("Observer Closed");
-    observer.disconnect();
-  }, 10000);
-}
-
-const createSubmission = async () => {
-  console.log("Creating submissions")
-  const newSubmission = {
-    sheetId: "8e6c7f15-e20f-44de-9d41-926e92cdee12",
-    problemId: "climbing-stairs",
-    submittedAt: new Date().getTime()
-  };
-
-  const result = await db.submissionRepo.add(newSubmission);
-  console.log('Submission added:', result);
-  // try {
-  //   const { currentProblem, currentSheet } = await getCurrentProblem();
-
-  //   if (currentProblem && currentSheet) {
-  //     const newSubmission: Submission = {
-  //       problem: currentProblem,
-  //       sheet: currentSheet,
-  //       submittedAt: new Date().getTime(),
-  //     };
-  //     await addToStore(DB_STORES.SUBMISSIONS, newSubmission);
-  //     console.log("Submission added successfully:", newSubmission);
-  //   }
-  // } catch (error) {
-  //   console.error("Failed to create submission:", error);
-  // }
-};
+  function getCurrentActiveTab(): Promise<chrome.tabs.Tab> {
+    return new Promise((resolve, reject) => {
+      chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        if (chrome.runtime.lastError) {
+          return reject(chrome.runtime.lastError);
+        }
+        if (!tabs.length) {
+          return reject(new Error("No active tab found"));
+        }
+        resolve(tabs[0]);
+      });
+    });
+  }
+});
