@@ -1,7 +1,7 @@
-import { ProblemMatchResult, Submission } from "@/types";
-import { chromeEvents, sheetIdParamsTitle, sheetsData } from "@/constants";
-import { getSheetRepo, getSubmissionRepo, getUserRepo } from "@/lib/db";
-import { getProblemInSheet } from "@/lib/utils";
+import { Submission } from "@/types";
+import { chromeEvents, sheetsData } from "@/constants";
+import { getSheetRepo, getSubmissionRepo } from "@/lib/db";
+import { addUserIfNotPresent, getProblemInSheet } from "@/lib/utils";
 
 export default defineBackground(() => {
     chrome.runtime.onInstalled.addListener(async () => {
@@ -105,20 +105,6 @@ export default defineBackground(() => {
             await getSheetRepo().bulkAdd(sheetsData);
         }
 
-        const existingUsersCount = await getUserRepo().count();
-        if (existingUsersCount === 0) {
-            let imageBlob = new Blob();
-
-            const response = await fetch('/avatar.png');
-            if (response.ok) {
-                imageBlob = await response.blob();
-            }
-
-            await getUserRepo().add({
-                joinedAt: Date.now(),
-                name: "Coder",
-                avatar: imageBlob
-            });
-        }
+        await addUserIfNotPresent();
     }
 });

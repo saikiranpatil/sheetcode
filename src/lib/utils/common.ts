@@ -1,6 +1,6 @@
 import { MS_PER_DAY, sheetHeroStyles, sheetIdParamsTitle } from "@/constants";
 import { ProblemMatchResult, Sheet, Submission } from "@/types";
-import { getSheetRepo } from "@/lib/db";
+import { getSheetRepo, getUserRepo } from "@/lib/db";
 
 export const getSheetDetails = (sheet?: Sheet) => {
     const completionCount = sheet?.topics?.reduce((s, pl) => s + pl.problems.reduce((sum, problem) => sum + (problem.isSolved ? 1 : 0), 0), 0) || 0;
@@ -158,5 +158,30 @@ export function getCurrentActiveTab(): Promise<chrome.tabs.Tab> {
             }
             resolve(tabs[0]);
         });
+    });
+}
+
+export async function addUserIfNotPresent() {
+    const existingUsersCount = await getUserRepo().count();
+    if (existingUsersCount === 0) {
+        const defaultUserData = await getDefaultUserData();
+        await getUserRepo().add(defaultUserData);
+    }
+}
+
+async function getDefaultUserData() {
+    let imageBlob = new Blob();
+
+    const response = await fetch('/avatar.png');
+    if (response.ok) {
+        imageBlob = await response.blob();
+    }
+
+    return ({
+        joinedAt: Date.now(),
+        name: "Coder",
+        avatar: imageBlob,
+        hasCompletedProfile: false,
+        hasCompletedGuide: false
     });
 }

@@ -8,7 +8,7 @@ import ArrowButton from "@/components/shared/ArrowButton";
 const Submissions = () => {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useFetch({
-    fetcher: useCallback(() => getSubmissionRepo().getRecentSubmissions({ page: page, pageSize: 1 }), [page])
+    fetcher: useCallback(() => getSubmissionRepo().getRecentSubmissions({ page }), [page])
   });
 
   return isLoading ? (

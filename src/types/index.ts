@@ -30,9 +30,12 @@ export interface Submission {
 }
 
 export interface User {
+    id?: number;
     name: string;
     joinedAt: number;
     avatar: Blob;
+    hasCompletedProfile: boolean;
+    hasCompletedGuide: boolean;
 }
 
 export type ProblemMatchResult = {

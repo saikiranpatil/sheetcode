@@ -31,3 +31,32 @@ export const sheetHeroStyles: Record<any, { body: string, icon: string }> = {
 }
 
 export const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+export const steps: {
+    title: string;
+    description: string;
+    imgUrl?: string;
+}[] = [{
+    title: "Welcome to SheetCode 🎉",
+    description: "Say goodbye to manual tracking! SheetCode automatically records your progress and keeps your practice organized.",
+},
+{
+    title: "Your Dashboard 📊",
+    description: "Click 'Show More' in the popup to open the landing page. Select a sheet like NeetCode 75 and start solving right away.",
+    imgUrl: "demo/step1.png"
+},
+{
+    title: "Pick a Problem ✅",
+    description: "Open any problem from your chosen sheet and hit 'Solve'. We'll track your session instantly in the background.",
+    imgUrl: "demo/step2.png"
+},
+{
+    title: "Auto Tracking 🔍",
+    description: "Look for the green checkmark—it means your coding session is being tracked automatically.",
+    imgUrl: "demo/step3.png"
+},
+{
+    title: "Effortless Progress 📁",
+    description: "Every submission is saved, progress updates in real-time, and everything stays neatly organized for you.",
+    imgUrl: "demo/step4.png"
+}];

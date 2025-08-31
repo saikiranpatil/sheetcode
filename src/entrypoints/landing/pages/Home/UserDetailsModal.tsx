@@ -1,48 +1,66 @@
-import { CircleUserRound, User } from "lucide-react";
+import { getUserRepo } from "@/lib/db";
+import { addUserIfNotPresent } from "@/lib/utils";
+import { User } from "@/types";
+import { Loader, UserIcon } from "lucide-react";
 
-function UserDetailsModal() {
-    const [isModalOpen, setIsModalOpen] = useState(true);
-    const [displayName, setDisplayName] = useState('');
-    const [file, setFile] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+interface UserDetailsModalProps {
+    type?: 'welcome' | 'edit';
+    isModalOpen: boolean;
+    closeModal: () => void;
+    user: User;
+};
+
+function UserDetailsModal({ type = "edit", user, isModalOpen, closeModal }: UserDetailsModalProps) {
+    const [displayName, setDisplayName] = useState(user?.name || '');
+    const [file, setFile] = useState<Blob | null>(user?.avatar || null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0];
         if (selectedFile) {
             setFile(selectedFile);
-            const url = URL.createObjectURL(selectedFile);
-            setPreviewUrl(url);
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const previewUrl = useMemo(() => {
+        if (file) {
+            const url = URL.createObjectURL(file);
+            return url;
+        }
+    }, [file]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Display Name:", displayName);
-        console.log("Selected File:", file);
-        // handle upload logic here
+        
+        setIsLoading(true);
+        await addUserIfNotPresent();
+        
+        const userRepo = getUserRepo();
+        const userDetails = await userRepo.getUser();
+        const userData = { avatar: file!, name: displayName, hasCompletedProfile: true };
+        await userRepo.update(userDetails?.id || 1, userData);
+
+        closeModal();
+        setIsLoading(false);
     };
 
     return (
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={
-            <>
+        <Modal isOpen={isModalOpen} onClose={closeModal} title={
+            type === "edit" ? (
+                <div className="flex flex-col">
+                    <h1 className="text-xl">Edit Profile</h1>
+                    <span className="text-[10px] text-gray-400 font-normal">Fill the details below to edit your details</span>
+                </div>
+            ) : (
                 <div className="flex flex-col">
                     <h1 className="text-xl">Welcome to Sheetcode</h1>
                     <span className="text-[10px] text-gray-400 font-normal">Fill the details below to get started</span>
                 </div>
-            </>
+            )
         }>
             <form onSubmit={handleSubmit} className="space-y-4 mb-6">
-                {previewUrl && (
-                    <div className="mb-4">
-                        <img
-                            src={previewUrl}
-                            alt="Preview"
-                            className="h-24 rounded border border-gray-300"
-                        />
-                    </div>
-                )}
-                <div>
-                    <label htmlFor="displayName" className="block text-[10px] font-semibold text-gray-700">
+                <div className="mb-4">
+                    <label htmlFor="displayName" className="block text-[10px] font-semibold text-gray-700 mb-2">
                         Display Name
                     </label>
                     <input
@@ -50,38 +68,55 @@ function UserDetailsModal() {
                         id="displayName"
                         value={displayName}
                         onChange={(e) => setDisplayName(e.target.value)}
+                        placeholder="'Coder' by default"
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500"
                     />
                 </div>
-                <div>
-                    <label className="block text-[10px] font-semibold text-gray-700 mb-1">
+                <div className="mb-4">
+                    <label className="block text-[10px] font-semibold text-gray-700 mb-2">
                         Avatar
                     </label>
-                    <div>
+                    <div className="flex items-center space-x-3">
+                        <div className="flex items-center justify-center w-10 h-10 rounded bg-blue-100 text-blue-600">
+                            {previewUrl ? (
+                                <div>
+                                    <img
+                                        src={previewUrl}
+                                        alt="Preview"
+                                        className="h-10 w-10 rounded border border-gray-300"
+                                    />
+                                </div>
+                            ) : (
+                                <UserIcon size={20} />
+                            )}
+                        </div>
                         <label
-                            htmlFor="fileUpload"
-                            className="cursor-pointer inline-block p-2 border border-blue-500 text-blue-500 text-sm font-medium rounded hover:bg-gray-100 hover:border-blue-600 hover:text-blue-600"
+                            htmlFor="avatarUpload"
+                            className="cursor-pointer px-3 py-1 rounded-md bg-gray-200 text-xs text-gray-700 hover:bg-gray-300"
                         >
-                            <div className="flex justify-center items-center">
-                                <CircleUserRound className="h-4" />
-                                <span className="text-[10px]">Choose Picture</span>
-                            </div>
+                            Choose Picture
                         </label>
                         <input
                             type="file"
-                            id="fileUpload"
+                            id="avatarUpload"
                             className="hidden"
                             onChange={handleFileChange}
                             accept="image/*"
                         />
                     </div>
                 </div>
+                <div className="text-right flex gap-2">
+                    <div>
+                        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-3 py-2 rounded-md transition">
+                            {isLoading ? (
+                                <Loader className="h-4 animate-spin" />
+                            ) : (
+                                <span> {type === "edit" ? "Update" : "Get Started"} </span>
+                            )}
+                        </button>
+                    </div>
+                </div>
             </form>
-            <div className="text-right flex gap-2">
-                <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">
-                    Get Started
-                </button>
-            </div>
         </Modal>
     )
 }
