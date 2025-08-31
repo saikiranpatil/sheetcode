@@ -1,7 +1,9 @@
 import { Link } from "react-router"
 import { ChevronRight } from "lucide-react"
+import { useCallback } from "react";
+import useFetch from "@/hooks/useFetch";
 
-import Submission from "@/entrypoints/landing/pages/Submissions/Submission";
+import Submission from "@/components/shared/Submission";
 import Spinner from "@/components/layout/Spinner";
 import { getSubmissionRepo } from "@/lib/db";
 

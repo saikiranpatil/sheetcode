@@ -1,11 +1,14 @@
 import { getSubmissionRepo } from "@/lib/db";
-import Submission from "./Submission";
+import Submission from "@/components/shared/Submission";
 import Spinner from "@/components/layout/Spinner";
+import React, { useState, useCallback } from "react";
+import useFetch from "@/hooks/useFetch";
+import ArrowButton from "@/components/shared/ArrowButton";
 
 const Submissions = () => {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useFetch({
-    fetcher: useCallback(() => getSubmissionRepo().getRecentSubmissions({ page: page }), [page])
+    fetcher: useCallback(() => getSubmissionRepo().getRecentSubmissions({ page: page, pageSize: 1 }), [page])
   });
 
   return isLoading ? (
@@ -38,9 +41,11 @@ const Submissions = () => {
           >
             Prev
           </ArrowButton>
-          <span className="text-[10px] text-gray-400">
-            Page {data.page} of {data.totalPages} (Showing {data.pageSize} of {data.total} items)
-          </span>
+          {data?.submissions?.length && data?.submissions?.length > 0 && (
+            <span className="text-[10px] text-gray-400">
+              Page {data.page} of {data.totalPages} (Showing {data.submissions.length} of {data.total} items)
+            </span>
+          )}
           <ArrowButton
             arrowDirection="right"
             disabled={page == data.totalPages}

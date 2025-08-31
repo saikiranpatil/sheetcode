@@ -29,6 +29,12 @@ export interface Submission {
     submittedAt: number
 }
 
+export interface User {
+    name: string;
+    joinedAt: number;
+    avatar: Blob;
+}
+
 export type ProblemMatchResult = {
     sheet: Sheet;
     problem: Problem;

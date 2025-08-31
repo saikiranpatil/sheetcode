@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { ChevronRight, NotebookText, Play } from "lucide-react"
 
-import { CircularProgress } from "@/components/CircularProgress";
+import { CircularProgress } from "@/components/shared/CircularProgress";
 import { getSheetDetails } from "@/lib/utils";
 import { Sheet } from "@/types";
 import Spinner from "@/components/layout/Spinner";

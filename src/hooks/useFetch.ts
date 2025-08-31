@@ -1,9 +1,8 @@
 interface UseFetchOptions<T, R = T> {
     fetcher: () => Promise<T>;
     transformer?: (data: T) => R;
-    initialData?: R;
     onError?: (error: Error) => void;
-}
+};
 
 type UseFetchReturnType<T> = {
     data: T;
@@ -18,51 +17,44 @@ type UseFetchReturnType<T> = {
  * @template T - The type of the raw data returned by the fetcher
  * @template R - The type of the transformed data (defaults to T if no transformer provided)
  * @param {UseFetchOptions<T, R>} options - Configuration options
- * @returns {UseFetchReturnType<R>} An object containing data, loading state, error, and reload function
+ * @returns {UseFetchReturnType<R>} An object containing data, loading state, error, and load function
  */
 function useFetch<T, R = T>({
     fetcher,
     transformer,
-    initialData,
     onError,
 }: UseFetchOptions<T, R>): UseFetchReturnType<R> {
-    const [state, setState] = useState<{
-        data: R;
-        isLoading: boolean;
-        error: string | undefined;
-    }>({
-        data: initialData as R,
-        isLoading: true,
-        error: undefined,
-    });
+    const [data, setData] = useState(undefined as R);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | undefined>();
 
-    const reload = useCallback(async () => {
-        try {
-            setState(prev => ({ ...prev, isLoading: true, error: undefined }));
-            const response = await fetcher();
-            const transformedData = transformer ? transformer(response) : (response as unknown as R);
-            setState(prev => ({ ...prev, data: transformedData }));
-        } catch (err) {
+    const load = useCallback(async () => {
+        fetcher()
+        .then((response: T) => {
+            setData(transformer ? transformer(response) : (response as unknown as R));
+        }, (err) => {
+            console.error("Error", err);
             const error = err instanceof Error ? err : new Error(String(err));
-            const errorMessage = error.message || 'Error while fetching data';
+            const errorMessage = error.message || "Error while fetching data";
 
-            setState(prev => ({ ...prev, error: errorMessage }));
+            setError(errorMessage);
             onError?.(error);
-        } finally {
-            setState(prev => ({ ...prev, isLoading: false }));
-        }
+        })
+        .finally(()=>{
+            setIsLoading(false);
+        })
     }, [fetcher, transformer, onError]);
 
     useEffect(() => {
-        reload();
-    }, [reload]);
+        load();
+    }, [load]);
 
     return {
-        data: state.data,
-        isLoading: state.isLoading,
-        error: state.error,
-        reload,
+        data,
+        isLoading,
+        error,
+        reload: load,
     };
-}
+};
 
 export default useFetch;

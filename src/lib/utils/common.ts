@@ -1,5 +1,6 @@
 import { MS_PER_DAY, sheetHeroStyles, sheetIdParamsTitle } from "@/constants";
-import { Sheet, Submission } from "@/types";
+import { ProblemMatchResult, Sheet, Submission } from "@/types";
+import { getSheetRepo } from "@/lib/db";
 
 export const getSheetDetails = (sheet?: Sheet) => {
     const completionCount = sheet?.topics?.reduce((s, pl) => s + pl.problems.reduce((sum, problem) => sum + (problem.isSolved ? 1 : 0), 0), 0) || 0;
@@ -90,6 +91,12 @@ export const getTimeAgo = (time: number, wordsCount: number = 1) => {
     return result.length ? result.join(', ') + ' ago' : 'just now';
 }
 
+export const tsToString = (timestamp: number): string => {
+    let dateStr = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+        .format(timestamp);
+    return dateStr;
+}
+
 export const getUrlWithSheetId = (urlString: string, sheetId: string) => {
     const url = new URL(urlString);
     url.searchParams.set(sheetIdParamsTitle, sheetId);
@@ -99,3 +106,57 @@ export const getUrlWithSheetId = (urlString: string, sheetId: string) => {
 export const getSheetHeroIconStyle = (color?: string) => {
     return color && sheetHeroStyles[color] ? sheetHeroStyles[color] : sheetHeroStyles["default"];
 };
+
+export async function getProblemInSheet(): Promise<ProblemMatchResult> {
+    const tab = await getCurrentActiveTab();
+    const tabUrl = tab?.url;
+
+    if (!tabUrl) {
+        throw new Error("Unable to retrieve current tab URL");
+    }
+
+    const url = new URL(tabUrl);
+    const sheetId = url.searchParams.get(sheetIdParamsTitle);
+
+    if (!sheetId || isNaN(Number(sheetId))) {
+        throw new Error("Invalid or missing Sheet ID in URL");
+    }
+
+    const numericSheetId = Number(sheetId);
+    const sheet = await getSheetRepo().getById(numericSheetId);
+
+    if (!sheet) {
+        throw new Error(`Sheet with ID ${numericSheetId} not found`);
+    }
+
+    const currentUrl = tabUrl.toLowerCase().replace(/\/$/, '');
+
+    for (let topicIndex = 0; topicIndex < sheet.topics.length; topicIndex++) {
+        const topic = sheet.topics[topicIndex];
+
+        for (let problemIndex = 0; problemIndex < topic.problems.length; problemIndex++) {
+            const problem = topic.problems[problemIndex];
+            const problemUrl = problem.link.toLowerCase().replace(/\/$/, '');
+
+            if (currentUrl.startsWith(problemUrl)) {
+                return { sheet, problem, topicIndex, problemIndex };
+            }
+        }
+    }
+
+    throw new Error("Problem not found. Make sure you're on correct problem page.");
+}
+
+export function getCurrentActiveTab(): Promise<chrome.tabs.Tab> {
+    return new Promise((resolve, reject) => {
+        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+            if (chrome.runtime.lastError) {
+                return reject(chrome.runtime.lastError);
+            }
+            if (!tabs.length) {
+                return reject(new Error("No active tab found"));
+            }
+            resolve(tabs[0]);
+        });
+    });
+}
