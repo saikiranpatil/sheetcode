@@ -41,7 +41,7 @@ const Submissions = () => {
           >
             Prev
           </ArrowButton>
-          {data?.submissions?.length && data?.submissions?.length > 0 && (
+          {data && data.submissions && data.submissions.length > 0 && (
             <span className="text-[10px] text-gray-400">
               Page {data.page} of {data.totalPages} (Showing {data.submissions.length} of {data.total} items)
             </span>

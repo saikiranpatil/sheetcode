@@ -40,7 +40,7 @@ const OngoingSheets = () => {
                             </div>
                         </div>
                         <div className="flex flex-col justify-between">
-                            <span className="text-xs text-black/60 font-semibold">Striver Sheet</span>
+                            <span className="text-xs text-black/60 font-semibold">{sheet.name}</span>
                             <span className="text-[10px] text-gray-400 mt-0.5">
                                 <span className="font-semibold text-black/50">{completionCount}/{problemCount}</span>
                                 {" "} problems solved
