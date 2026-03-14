@@ -1,5 +1,6 @@
 import { Link } from "react-router";
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
+import useFetch from "@/hooks/useFetch";
 
 import { getSheetRepo } from "@/lib/db";
 import { getTimeAgo } from "@/lib/utils";
@@ -11,14 +12,19 @@ interface SubmissionProps {
 }
 
 const Submission = ({ submission, type }: SubmissionProps) => {
-  const { data: sheet, isLoading } = useFetch({
-    fetcher: () => getSheetRepo().getById(submission.sheetId),
-  });
+  const fetcher = useCallback(
+    () => getSheetRepo().getById(submission.sheetId),
+    [submission.sheetId]
+  );
+
+  const { data: sheet, isLoading } = useFetch({ fetcher });
 
   const problem = useMemo(() => {
-    return sheet?.topics
-      ?.flatMap((topic) => topic.problems)
-      .find((p) => p.id === submission.problemId) ?? null;
+    return (
+      sheet?.topics
+        ?.flatMap((topic) => topic.problems)
+        .find((p) => p.id === submission.problemId) ?? null
+    );
   }, [sheet, submission.problemId]);
 
   if (isLoading || !sheet || !problem) return null;
@@ -32,12 +38,8 @@ const Submission = ({ submission, type }: SubmissionProps) => {
           </Link>
         </span>
         <div className="flex gap-4 text-[10px]">
-          <span className="text-gray-400">
-            {getTimeAgo(submission.submittedAt, 1)}
-          </span>
-          <span className="text-gray-500 min-w-10 text-right">
-            {problem.platform}
-          </span>
+          <span className="text-gray-400">{getTimeAgo(submission.submittedAt, 1)}</span>
+          <span className="text-gray-500 min-w-10 text-right">{problem.platform}</span>
         </div>
       </div>
     );
