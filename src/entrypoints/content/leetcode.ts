@@ -16,10 +16,7 @@ export const trackSubmissions = () => {
 }
 
 const track = () => {
-    createMutation(document.body, 'span[data-e2e-locator="submission-result"]', () => {
-        createSubmission();
-        displaySuccessModal();
-    });
+    createMutation(document.body, 'span[data-e2e-locator="submission-result"]', createSubmission);
 }
 
 const displaySuccessModal = () => {
@@ -69,8 +66,7 @@ const displaySuccessModal = () => {
 
 const getSubmitButton = () => {
     const buttons = Array.from(document.querySelectorAll("button"));
-    const submitButton = buttons.find(button => button.textContent?.toLocaleLowerCase().includes("submit"));
-    return submitButton;
+    return buttons.find(button => button.textContent?.toLocaleLowerCase().includes("submit"));
 }
 
 const createMutation = (element: Element, targetSelector: string, callback?: () => void) => {
@@ -85,7 +81,6 @@ const createMutation = (element: Element, targetSelector: string, callback?: () 
 
                         if (targetElement) {
                             console.log("Mutation found at", node, " for ", targetSelector);
-
                             callback?.();
                             observer.disconnect();
                         }
@@ -104,11 +99,12 @@ const createMutation = (element: Element, targetSelector: string, callback?: () 
 }
 
 const createSubmission = async () => {
-    console.log("Creating submissions");
+    console.log("Creating submission");
 
-    chrome.runtime.sendMessage({
-        type: "SAVE_SUBMISSION",
-    }, (response) => {
-        console.log("Submission added successfully:", response);
+    chrome.runtime.sendMessage({ type: "SAVE_SUBMISSION" }, (response) => {
+        console.log("Submission response:", response);
+        if (response?.success) {
+            displaySuccessModal();
+        }
     });
 };

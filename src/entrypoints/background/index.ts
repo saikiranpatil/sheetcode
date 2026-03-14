@@ -18,10 +18,12 @@ export default defineBackground(() => {
 
     chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         if (message.type === chromeEvents.SAVE_SUBMISSION) {
-            handleSaveSubmission().then(sendResponse).catch(error => {
-                console.error("Error saving submission:", error);
-                sendResponse({ success: false, error: error.message });
-            });
+            handleSaveSubmission()
+                .then(sendResponse)
+                .catch(error => {
+                    console.error("Error saving submission:", error);
+                    sendResponse({ success: false, error: error.message });
+                });
             return true;
         }
         return false;
@@ -64,7 +66,7 @@ export default defineBackground(() => {
                     180: "icons/180x180.png"
                 }
             });
-        })
+        });
     }
 
     async function handleSaveSubmission() {
