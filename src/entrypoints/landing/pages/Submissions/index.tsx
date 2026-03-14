@@ -11,6 +11,8 @@ const Submissions = () => {
     fetcher: useCallback(() => getSubmissionRepo().getRecentSubmissions({ page }), [page])
   });
 
+  console.log(data);
+
   return isLoading ? (
     <Spinner size="sm" />
   ) : (
@@ -36,7 +38,7 @@ const Submissions = () => {
         <div className="flex justify-between items-center">
           <ArrowButton
             arrowDirection="left"
-            disabled={page == 1}
+            disabled={page < 2}
             onClick={() => setPage(pg => pg - 1)}
           >
             Prev
@@ -48,7 +50,7 @@ const Submissions = () => {
           )}
           <ArrowButton
             arrowDirection="right"
-            disabled={page == data.totalPages}
+            disabled={page + 1 > data.totalPages}
             onClick={() => setPage(pg => pg + 1)}
           >
             Next

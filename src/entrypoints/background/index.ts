@@ -46,10 +46,10 @@ export default defineBackground(() => {
             chrome.action.setTitle({ title: "Sheetcode: Enjoy coding, problems tracking is on us" });
             chrome.action.setIcon({
                 path: {
-                    16: "icon/checked/16X16.png",
-                    32: "icon/checked/32X32.png",
-                    192: "icon/checked/192X192.png",
-                    180: "icon/checked/180X180.png"
+                    16: "icon/checked/16x16.png",
+                    32: "icon/checked/32x32.png",
+                    192: "icon/checked/192x192.png",
+                    180: "icon/checked/180x180.png"
                 }
             });
         }).catch((error) => {
@@ -58,10 +58,10 @@ export default defineBackground(() => {
             chrome.action.setTitle({ title: "Sheetcode: Visit valid problem page to track submissions" });
             chrome.action.setIcon({
                 path: {
-                    16: "icon/16X16.png",
-                    32: "icon/32X32.png",
-                    192: "icon/192X192.png",
-                    180: "icon/180X180.png"
+                    16: "icons/16x16.png",
+                    32: "icons/32x32.png",
+                    192: "icons/192x192.png",
+                    180: "icons/180x180.png"
                 }
             });
         })

@@ -172,7 +172,7 @@ export async function addUserIfNotPresent() {
 async function getDefaultUserData() {
     let imageBlob = new Blob();
 
-    const response = await fetch('/avatar.png');
+    const response = await fetch('/images/avatar.png');
     if (response.ok) {
         imageBlob = await response.blob();
     }

@@ -10,7 +10,7 @@ import { getSheetRepo } from "@/lib/db";
 const OngoingSheets = () => {
     const { data: ongoingSheets, isLoading } = useFetch({
         fetcher: useCallback(() => {
-            return getSheetRepo().filterAndSort((sheet: Sheet) => sheet.isActive);
+            return getSheetRepo().getAll();
         }, [])
     });
 

@@ -15,8 +15,15 @@ export class GenericRepository<T extends { id?: number }> {
         return this.table.bulkAdd(items as T[]);
     }
 
-    getAll(): Promise<T[]> {
-        return this.table.toArray();
+    async getAll(
+        options?: {
+            filterFn?: (item: T) => boolean;
+            sortFn?: (a: T, b: T) => number;
+        }
+    ): Promise<T[]> {
+        const all = await this.table.toArray();
+        const filtered = options?.filterFn ? all.filter(options.filterFn) : all;
+        return options?.sortFn ? filtered.sort(options.sortFn) : filtered;
     }
 
     getById(id: number): Promise<T | undefined> {
@@ -33,14 +40,5 @@ export class GenericRepository<T extends { id?: number }> {
 
     count(): Promise<number> {
         return this.table.count();
-    }
-
-    async filterAndSort(
-        filterFn: (item: T) => boolean,
-        sortFn?: (a: T, b: T) => number
-    ): Promise<T[]> {
-        const all = await this.table.toArray();
-        const filtered = all.filter(filterFn);
-        return sortFn ? filtered.sort(sortFn) : filtered;
     }
 }

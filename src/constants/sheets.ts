@@ -1,5 +1,4 @@
-import neetcode150 from "@/assets/sheets/Neetcode150.json";
-import blind75 from "@/assets/sheets/Blind75.json";
+import { blind75, neetcode150 } from "@/assets/sheets";
 import { Sheet } from "../types";
 
 export const sheetsData: Omit<Sheet, 'id'>[] = [

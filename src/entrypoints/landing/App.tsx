@@ -22,11 +22,7 @@ function App() {
     <Spinner size="sm" />
   ) : (
     <div className="w-full min-h-screen bg-gray-100 transition-colors duration-300">
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-3xl md:max-w-[80vw] mx-auto">
-          <Navbar />
-        </div>
-      </div>
+      <Navbar />
       <div className="mx-auto max-w-3xl md:max-w-[80vw]">
         <Routes>
           <Route index element={data?.hasCompletedGuide === false ? <QuickGuide reloadUser={reload} /> : <Home />} />

@@ -6,15 +6,13 @@ import { getSheetRepo } from "@/lib/db";
 const Sheets = () => {
   const { data: sheets, isLoading: isSheetsLoading } = useFetch({
     fetcher: useCallback(() => {
-      return getSheetRepo().filterAndSort((sheet: Sheet) => sheet.isActive);
+      return getSheetRepo().getAll();
     }, [])
   });
 
   const { data: ongoingSheets, isLoading: isOngoingSheetsLoading } = useFetch({
-    fetcher: useCallback(() => getSheetRepo().filterAndSort((sheet: Sheet) => sheet.isActive), [])
+    fetcher: useCallback(() => getSheetRepo().getAll({ filterFn: (sheet: Sheet) => sheet.isActive }), [])
   });
-
-  console.log(sheets, ongoingSheets);
 
   return isSheetsLoading || isOngoingSheetsLoading ? (
     <Spinner size="sm" />

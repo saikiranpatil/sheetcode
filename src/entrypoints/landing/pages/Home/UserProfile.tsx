@@ -28,7 +28,7 @@ const UserProfile = () => {
             <div className="border border-gray-200 rounded">
                 <img
                     className="h-20 w-20 rounded-sm"
-                    src={profileUrl || "avatar.png"}
+                    src={profileUrl || "images/avatar.png"}
                     alt="Profile Image"
                 />
             </div>

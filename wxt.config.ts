@@ -15,18 +15,18 @@ export default defineConfig({
     description: "A simple Chrome extension to keep track of coding problems solved on different platforms.",
     permissions: ["activeTab", "tabs"],
     icons: {
-      16: "icon/16x16.png",
-      32: "icon/32x32.png",
-      192: "icon/192x192.png",
-      180: "icon/180x180.png"
+      16: "icons/16x16.png",
+      32: "icons/32x32.png",
+      192: "icons/192x192.png",
+      180: "icons/180x180.png"
     },
     action: {
       default_title: "Sheetcode",
       default_icon: {
-        16: "icon/16x16.png",
-        32: "icon/32x32.png",
-        192: "icon/192x192.png",
-        180: "icon/180x180.png"
+        16: "icons/16x16.png",
+        32: "icons/32x32.png",
+        192: "icons/192x192.png",
+        180: "icons/180x180.png"
       }
     }
   },
